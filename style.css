@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Teko:wght@300;400;500;600;700&display=swap');
+
+:root{
+    /* Varibles tipografía*/
+    /*font families*/
+    --ff-title:'Teko';
+    --ff-text:'Montserrat';
+    /*font sizes*/
+    --fs-900: 9.375rem;
+    --fs-800: 6.25rem;
+    --fs-700: 3.5rem;
+    --fs-600: 2rem;
+    --fs-500: 1.75rem;
+    --fs-400: 1.125rem;
+    --fs-300: 1rem;
+    --fs-200: 0.875rem;
+    /* Variables colores*/
+    --clr-dark:#2e424d;
+    --clr-medium:#5b8291;
+    --clr-light:#98DAD9;
+    --clr-white:#eaebed;
+
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+*::after,::before{
+    box-sizing: border-box;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p{
+    font-size: 400;
+    font-weight: 400;
+}
+
+.ff-text{
+    font-family: var(--ff-text),sans-serif;
+
+}
+
+.ff-title{
+    font-family: var(--ff-title),Verdana, Geneva, Tahoma;
+}
+
+.fs-900 {
+    font-size: var(--fs-900);
+}
+.fs-800 {
+    font-size: var(--fs-800);
+}
+.fs-700 {
+    font-size: var(--fs-700);
+}
+.fs-600 {
+    font-size: var(--fs-600);
+}
+.fs-500 {
+    font-size: var(--fs-500);
+}
+.fs-400 {
+    font-size: var(--fs-400);
+}
+.fs-300 {
+    font-size: var(--fs-300);
+}
+.fs-200 {
+    font-size: var(--fs-200);
+}
+
+.text-color-dark{
+    color: var(--clr-dark);    
+}
+
+.text-color-medium{
+    color: var(--clr-medium);    
+}
+
+.text-color-light{
+    color: var(--clr-light);
+}
+
+.text-color-white{
+    color: var(--clr-white);    
+}
+
+.bold{
+    font-weight: 700;
+}
+.uppercase{
+    text-transform: uppercase;
+}
+
+.bg-color-white{
+    background-color: var(--clr-white);
+}
+body{
+    min-height: 100vh;
+    min-width: 100vw;
+    font-family: var(--ff-text);
+    font-size: var(--fs-400);
+    font-weight: 400;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--clr-white);
+}
+img,picture{
+    display: block;
+}
+input,button,textarea,select{
+    font:inherit;
+}
+.sr-only{
+    display: none;
+}
+
+.flex{
+    display: flex;
+}
+
+header{    
+    align-items: center;    
+    position: relative;
+    
+}
+
+.logo{
+    padding: 2rem 1rem;
+}
+/* navegacion*/
+.navigation{
+    list-style-type: none;
+    padding: 1rem;
+    gap: 2.5rem;
+    flex-direction: column;
+    margin: 0;    
+    background: hsl(230 35% 7% / .95);
+    position: fixed;
+    inset: 0 0 0 30%;
+    z-index: 1000;
+    backdrop-filter: blur(1.5rem);
+    background: hsl(0 0% 100% / .05);
+    backdrop-filter: blur(1.5rem);
+    transform: translateX(100%);
+    transition: transform 250ms ease-in-out;
+}
+.navigation[data-visible='true']{
+    transform: translateX(0);
+}
+.navigation > li > a{
+    text-decoration: none;
+    
+}
+.navigation > li > a > span{
+    padding-inline: 1.2rem;
+    
+}
+    
+.underline-indicators > *{
+    cursor: pointer;
+    padding: .5rem 0;
+    border: none;
+    border-bottom: 0.15rem solid transparent;   
+}
+.underline-indicators > *:hover,:focus{
+    border-color: #98DAD9;
+}
+
+
+.mobile-toggle-nav{
+    background-image: url(./assets/bars-solid.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    width: 45px;
+    height: 45px;
+    border: none;
+    color: transparent;
+    cursor: pointer;  
+    position: absolute;
+    top: 1rem;
+    right: 2rem; 
+    z-index: 2000;
+}
+.mobile-toggle-nav[aria-expanded='true']{
+    background-image: url(./assets/xmark-solid.svg);    
+}
+.mobile-toggle-nav:focus-visible{
+    outline: 5px solid white;
+    outline-offset: 5px;
+}
+.active{
+    border-color: var(--clr-light);
+}
+/* contacto y redes */
+.header-contacto{    
+    justify-content: space-around;    
+    align-content: center;
+}
+.header-contacto > span{
+    align-self: center;
+    margin-left: 12px;
+}
+.header-contacto > span> img{
+    width: 45px;
+    
+}
+/*layout*/
+.container{
+    display: grid;
+    text-align: center;
+    place-items: center;
+    padding-inline: 1rem;
+    padding-bottom: 4rem;   
+    gap: 1rem;
+}
+
+/*home*/
+
+
+
+#home{
+    background-image: url(./assets/landscape-gd23c61872_1280.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.home-ul{
+    list-style-type: none;
+}
+.home-ul > li{
+    padding: 0.5rem;
+}
+
+.large-button{
+    position: relative;
+    padding: 0 2em;
+    z-index: 1;
+    text-decoration: none;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    margin: 0 auto;
+    display: inline-grid;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--clr-dark);
+    background-color: var(--clr-light);
+}
+.large-button::after{
+    content: '';
+    position: absolute;
+    z-index: -1;
+    background: var(--clr-medium);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    opacity: 0;  
+    transition:opacity 200ms linear, transform 300ms ease-in-out;
+}
+
+.large-button:hover::after,:focus::after{
+    opacity: 1;
+    transform: scale(1.1);         
+}    
+
+/* media querys*/
+
+@media(max-width:768px){
+    :root{
+        --fs-900: 6.375rem;
+        --fs-800: 4.25rem;
+        --fs-700: 3.5rem;
+        --fs-600: 1.7rem;
+        --fs-500: 1.45rem;
+        --fs-400: .8rem;        
+        --fs-200: 0.75rem;
+    }
+}
