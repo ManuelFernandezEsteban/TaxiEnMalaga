@@ -76,6 +76,10 @@ p{
     font-size: var(--fs-200);
 }
 
+.lh-normal{
+    line-height: 1.5rem;    
+}
+
 .text-color-dark{
     color: var(--clr-dark);    
 }
@@ -130,7 +134,11 @@ input,button,textarea,select{
 header{    
     align-items: center;    
     position: relative;
-    
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: var(--clr-medium);
 }
 
 .logo{
@@ -152,6 +160,9 @@ header{
     backdrop-filter: blur(1.5rem);
     transform: translateX(100%);
     transition: transform 250ms ease-in-out;
+}
+.navigation > li{
+    padding: 0.5rem;
 }
 .navigation[data-visible='true']{
     transform: translateX(0);
@@ -189,7 +200,7 @@ header{
     position: absolute;
     top: 1rem;
     right: 2rem; 
-    z-index: 2000;
+    z-index: 1;
 }
 .mobile-toggle-nav[aria-expanded='true']{
     background-image: url(./assets/xmark-solid.svg);    
@@ -211,7 +222,7 @@ header{
     margin-left: 12px;
 }
 .header-contacto > span> img{
-    width: 45px;
+    width: 35px;
     
 }
 /*layout*/
@@ -221,7 +232,7 @@ header{
     place-items: center;
     padding-inline: 1rem;
     padding-bottom: 4rem;   
-    gap: 1rem;
+    gap: 5rem;
 }
 
 /*home*/
@@ -231,7 +242,7 @@ header{
 #home{
     background-image: url(./assets/landscape-gd23c61872_1280.jpg);
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center top;
 }
 
 .home-ul{
@@ -272,6 +283,39 @@ header{
     opacity: 1;
     transform: scale(1.1);         
 }    
+
+.bienvenidos{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+
+footer{
+    width: 100%;
+    background-color: var(--clr-dark);
+    color: var(--clr-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.header-secondary{
+    justify-content: baseline;
+    align-items: center;
+}
+.legales{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding-bottom: 1rem;
+}
+
+/* servicios*/
 
 /* media querys*/
 
