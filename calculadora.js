@@ -2,11 +2,19 @@ const form = document.querySelector('form');
 const selectOrigenes = document.querySelector('#origen')
 const selectDestinos=document.querySelector('#destino');
 const spanPrecio = document.querySelector('#precio');
+
 let indexOrigen=-1;
 let indexDestino=-1;
 const url = './assets/data.json';
 let matrizPrecios=[];
 let listaOrigenes=[];
+const formReserva=document.formReserva;
+const formCalculadora=document.formCalculadora;
+const reservaPax=formReserva.pax;
+//const destinoReserva=formReserva.destinoReserva;
+//const recogidaReserva=formReserva.recogidaReserva;
+const btnReserva=document.querySelector('#btnReserva');
+
 
 async function getLista(url){
 
@@ -16,7 +24,7 @@ async function getLista(url){
 }
 
 function selectionDestinosChange(event){
-    indexDestino=event.target.value;
+    indexDestino=event.target.value;    
     actualizarPrecio(indexOrigen,indexDestino);
 }
 
@@ -65,6 +73,7 @@ function populateSelectOrigenes(){
         option.classList.add('ff-text');
         option.value=origen.id;
         option.text=origen.origen;
+       
         selectOrigenes.appendChild(option);
 
     })
@@ -74,10 +83,13 @@ function actualizarPrecio(origen,destino){
     
     if (origen<0||destino<0){
         spanPrecio.textContent='0 €';
+        btnReserva.disabled=true;
     }else{
         spanPrecio.textContent='';
         const precio = matrizPrecios[origen][destino];
         spanPrecio.textContent=`${precio} €`
+        btnReserva.disabled=false;
+        
     }
 }
 
@@ -87,13 +99,37 @@ function borrarOptions(select){
         if (option.value!=-1){
             option.remove();            
         }
-    }); 
+    });
+    
 }
 
 crearMatriz(url);
 
+function reservaPaxChange(event){
+    const paxSpan = document.querySelector('#paxSpan');
+    paxSpan.innerHTML='';
+    paxSpan.innerHTML=`${event.target.value} pax`;
+}
+
 selectOrigenes.addEventListener('change',selectionOrigenChange);
 selectDestinos.addEventListener('change',selectionDestinosChange);
+reservaPax.addEventListener('change',reservaPaxChange);
 
-borrarOptions(selectDestinos)
+borrarOptions(selectDestinos);
 
+function habilitarReserva(){
+    if (formReserva.classList.contains('sr-only')){
+        formReserva.classList.remove('sr-only');
+    } 
+}
+function desHabilitarReserva(){
+    if (!formReserva.classList.contains('sr-only')){
+        formReserva.classList.add('sr-only');
+    } 
+}
+
+const mostrarReserva=()=>{
+    console.log(formReserva);
+    habilitarReserva() ;
+
+}

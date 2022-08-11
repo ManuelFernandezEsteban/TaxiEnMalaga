@@ -78,33 +78,170 @@
     </header>
 
     <main class="container">
+        <h1 class="ff-title text-color-dark fs-700"> Servicios de Taxi en Málaga</h1>
         <div class="bg-color-white" id="calculadora">
-            <h1 class="text-color-dark  fs-600">Calculadora de precios</h1>
-            <form class="box" action="" name="form-calculadora">
+            <h2 class="text-color-dark  fs-500">Calculadora de precios</h1>
+                <form class="box" action="" name="formCalculadora">
 
-                <div class="wrapper-input text-color-dark">
-                    <label class="bold ff-title lt-spacing-1" for="origen">Origen</label>
-                    <select name="origen" id="origen">
-                        <option class="ff-text" value="-1">Origen</option>
-                    </select>
-                </div>
-                <div class="wrapper-input text-color-dark">
-                    <label class="bold ff-title lt-spacing-1" for="destino">Destino</label>
-                    <select name="destino" id="destino">
-                        <option class="ff-text" value="-1">Destino</option>
-                    </select>
-                </div>
-                <div>
-                    <span class="bold fs-500 text-color-dark">Precio: </span><span id="precio"
-                        class="bold fs-500 text-color-dark">0 €</span>
-                </div>
-            </form>
+                    <div class="wrapper-input text-color-dark">
+                        <label class="bold ff-title lt-spacing-1" for="origen">Origen</label>
+                        <select name="origen" id="origen">
+                            <option class="ff-text" value="-1">Origen</option>
+                        </select>
+                    </div>
+                    <div class="wrapper-input text-color-dark">
+                        <label class="bold ff-title lt-spacing-1" for="destino">Destino</label>
+                        <select name="destino" id="destino">
+                            <option class="ff-text" value="-1">Destino</option>
+                        </select>
+                    </div>
+                    <div>
+                        <span class="bold fs-500 text-color-dark">Precio: </span><span id="precio"
+                            class="bold fs-500 text-color-dark">0 €</span>
+                    </div>
+                </form>
+                <form class="box sr-only" action="" name="formReserva">
+                    <h3 class="ff-title text-color-dark fs-500">Reserva de taxi</h3>
+                    <div class="wrapper-input text-color-dark">
+                        <label for="name" class="bold ff-title lt-spacing-1">Nombre:</label>
+                        <input type="text" name="name" id="name" placeholder="Nombre y apellidos" required>
+                    </div>
+                    <div class="wrapper-input text-color-dark">
+                        <label for="email" class="bold ff-title lt-spacing-1">Email:</label>
+                        <input type="email" name="email" id="email" placeholder="Email">
+                    </div>
+                    <div class="wrapper-input text-color-dark">
+                        <label for="phone" class="bold ff-title lt-spacing-1">Teléfono:</label>
+                        <input type="tel" name="phone" id="phone" placeholder="Phone" required>
+                    </div>
+            <!--        <div class="wrapper-input text-color-dark">
+                        <label for="recogidaReserva" class="bold ff-title lt-spacing-1">Recogida:</label>
+                        <input type="text" name="recogidaReserva" id="recogidaReserva" readonly>
+                    </div>
+                    <div class="wrapper-input text-color-dark">
+                        <label for="destinoReserva" class="bold ff-title lt-spacing-1">Destino:</label>
+                        <input type="tel" name="destinoReserva" id="destinoReserva" readonly>
+                    </div>-->
+                    <div class="flex wrapper-date-time">
+                        <div class="wrapper-input text-color-dark">
+                            <label for="fecha" class="bold ff-title lt-spacing-1">Fecha:</label>
+                            <input type="date" name="fecha" id="fecha" required>
+                        </div>
+                        <div class="wrapper-input text-color-dark">
+                            <label for="hora" class="bold ff-title lt-spacing-1">Hora:</label>
+                            <input type="time" name="hora" id="hora" required>
+                        </div>
+                        <div class="wrapper-input text-color-dark">
+                            <label for="vuelo" class="bold ff-title lt-spacing-1">Vuelo:</label>
+                            <input type="text" name="vuelo" id="vuelo" placeholder="Nº vuelo" required>
+                        </div>
+                    </div>
+                    <div class="wrapper-input text-color-dark">
+                        <label for="pax" class="bold ff-title lt-spacing-1">Pax:</label>
+                        <input type="range" min="1" max="9" step="1" name="pax" id="pax" value="1" required>
+                        <span id="paxSpan" class="bold">1 Pax</span>
+                    </div>
+                    <div class="wrapper-input text-color-dark">
+                        <label for="observaciones" class="bold ff-title lt-spacing-1">Observaciones:</label>
+                        <input type="text" name="observaciones" id="observaciones" placeholder="Que necesita">
+                    </div>
+                    <div class="flex text-color-dark">
+                        <label for="privacidad" class="bold ff-title lt-spacing-1">Política de privacidad
+                            <input type="checkbox" name="privacidad" id="privacidad">
+                        </label>
+                        
+                    </div>
+
+
+                </form>
 
         </div>
         <div>
-            <button class="large-button--button text-color-ligth uppercase ">
+            <button disabled="true" id="btnReserva" class="large-button--button text-color-ligth uppercase" onclick="mostrarReserva()">
                 reservar
             </button>
+        </div>
+        <div class="box-servicios">
+            <h3 class="ff-title text-color-dark fs-600">TaxiEnMálaga</h3>
+            <h4 class="ff-title fs-400 text-color-medium lt-spacing-1"> Traslados Aeropuerto, Puerto, Ave, Estaciones
+            </h4>
+
+            <p class="fs-300 ff-text text-color-medium"> Ofrecemos servicios de taxi en Málaga, traslados y recogidas al
+                Aeropuerto de Málaga (AGP), Puerto, Estación de tren AVE María Zambrano (VIALIA). Le estaremos esperando
+                en la zona de llegadas</p>
+        </div>
+        <hr>
+        <div class="box-servicios">
+
+            <h4 class="ff-title fs-400 text-color-medium lt-spacing-1"> Servicios a empresas, Instituciones y Hoteles
+            </h4>
+
+            <p class="fs-300 ff-text text-color-medium">Ofrecemos servicios de taxi privados para empresas, traslados de
+                directivos, empleados, para hoteles, congresos, eventos, fiestas y reuniones, con condiciones y
+                descuentos especiales</p>
+        </div>
+        <hr>
+
+        <div class="box-servicios">
+
+            <h4 class="ff-title fs-400 text-color-medium lt-spacing-1"> Visitas turísticas y guiadas, excursiones
+            </h4>
+
+            <p class="fs-300 ff-text text-color-medium">Ofrecemos servicios privados y personalizados de taxi para
+                Málaga y el área metropolitana de Málaga. Establezca la ruta que desea realizar y nosotros le
+                garantizamos un viaje ameno y seguro</p>
+        </div>
+        <hr>
+        <div class="box-servicios">
+
+            <h4 class="ff-title fs-400 text-color-medium lt-spacing-1"> Servicio puerta a puerta y gestiones
+            </h4>
+
+            <p class="fs-300 ff-text text-color-medium">Ofrecemos el servicio de "Taxi Málaga Gestiones" (organismos
+                oficiales, instituciones, bancos, empresas, compra de billetes, otras compras, etc,...), con y sin
+                acompañante, desde/a domicilio</p>
+        </div>
+        <hr>
+        <h3 class="ff-title fs-600 text-color-dark">¿Porqué utilizar TaxiEnMálaga para sus desplazamientos en Málaga?
+        </h3>
+        <div class="box-servicios">
+
+            <h4 class="ff-title fs-400 text-color-medium lt-spacing-1">Disponibilidad y seguridad
+            </h4>
+
+            <p class="fs-300 ff-text text-color-medium">El objetivo de TaxiEnMálaga es la satisfacción de nuestros
+                clientes, <span class="bold">para ello trabajamos las 24 horas del día 7 días a la semana</span> en el
+                servicio de taxi. Garantizamos las recogidas y traslados a tiempo en Málaga y en el Aeropuerto de
+                Málaga.</p>
+        </div>
+        <hr>
+        <div class="box-servicios">
+
+            <h4 class="ff-title fs-400 text-color-medium lt-spacing-1">Asequible fiable y rápido
+            </h4>
+
+            <p class="fs-300 ff-text text-color-medium">Los precios de TaxiEnMálaga están aprobados por el área de
+                movilidad Oficina Municipal del Taxi del Ayuntamiento de Málaga. No tiene letra pequeña y disponemos
+                para su comodidad de la <span class="bold">opción de pago con tarjeta de crédito.</span></p>
+        </div>
+        <hr>
+        <div class="box-servicios">
+
+            <h4 class="ff-title fs-400 text-color-medium lt-spacing-1">Profesionalidad y comodidad
+            </h4>
+
+            <p class="fs-300 ff-text text-color-medium">La experiencia de los conductores de TaxiEnMálaga <span
+                    class="bold">garantizan la comodidad de nuestros clientes</span> en el servicio de taxi en Málaga.
+                Nos esforzamos para ofrecerle el mejor traslado y el mejor trato.</p>
+        </div>
+        <hr>
+        <div class="box-servicios">
+
+            <h4 class="ff-title fs-400 text-color-medium lt-spacing-1">Es local, es seguro, es de Málaga</h4>
+
+            <p class="fs-300 ff-text text-color-medium">TaxiEnMálaga es una empresa local y comprometida con su
+                objetivo, ubicada en el centro de la ciudad, viviendo en el centro de Málaga. Disfrute del mejor y mas
+                barato servicio de transporte y taxi en Málaga.</p>
         </div>
 
     </main>
