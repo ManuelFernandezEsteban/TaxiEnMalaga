@@ -13,5 +13,13 @@ navToggle.addEventListener('click',()=>{
         //navToggle.style('display','none');
     }
 
-
+    const barra = navToggle.querySelector('.barra');
+    const cruz = navToggle.querySelector('.cruz');
+    if (barra.classList.contains('sr-only')){
+        barra.classList.remove('sr-only');
+        cruz.classList.add('sr-only');
+    }else{
+        barra.classList.add('sr-only');
+        cruz.classList.remove('sr-only');
+    }
 })

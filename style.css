@@ -178,7 +178,7 @@ header {
     background: hsl(230 35% 7% / .95);
     position: fixed;
     inset: 0 0 0 30%;
-
+    padding-top: 4rem;
     backdrop-filter: blur(1.5rem);
     background: hsl(0 0% 100% / .05);
     backdrop-filter: blur(1.5rem);
@@ -188,6 +188,7 @@ header {
 
 .navigation>li {
     padding: 0.5rem;
+    
 }
 
 .navigation[data-visible='true'] {
@@ -218,12 +219,13 @@ header {
 
 
 .mobile-toggle-nav {
-    background-image: url(./assets/bars-solid.svg);
+    /*background-image: url(./assets/bars-solid.svg);
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: center;*/
     background-color: transparent;
-    width: 45px;
-    height: 45px;
+    
+    width: 35px;
+    height: 35px;
     border: none;
     color: transparent;
     cursor: pointer;
@@ -232,11 +234,19 @@ header {
     right: 2rem;
     z-index: 1;
 }
+.cruz{
 
-.mobile-toggle-nav[aria-expanded='true'] {
-    background-image: url(./assets/xmark-solid.svg);
+}
+/*.mobile-toggle-nav[aria-expanded='true']{
+    /*background-image: url(./assets/xmark-solid.svg);
+    display: block;
 }
 
+.mobile-toggle-nav[aria-expanded='true']~.cruz {
+    /*background-image: url(./assets/xmark-solid.svg);
+    display: block;
+}
+*/
 .mobile-toggle-nav:focus-visible {
     outline: 5px solid white;
     outline-offset: 5px;
@@ -260,6 +270,12 @@ header {
 .header-contacto>span>img {
     width: 35px;
 
+}
+.logo-fb{
+    width: 30px;
+}
+.logo-fb > i > svg > path {
+    fill: var(--clr-white)
 }
 
 /*layout*/
