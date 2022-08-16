@@ -1,5 +1,5 @@
 const form = document.querySelector('form');
-const selectOrigenes = document.querySelector('#origen')
+const selectOrigenes = document.querySelector('#origen');
 const selectDestinos=document.querySelector('#destino');
 const spanPrecio = document.querySelector('#precio');
 
@@ -130,6 +130,9 @@ function desHabilitarReserva(){
 
 const mostrarReserva=()=>{
     console.log(formReserva);
-    habilitarReserva() ;
+    
+    habilitarReserva();
+    btnReserva.classList.add('sr-only');
+
 
 }

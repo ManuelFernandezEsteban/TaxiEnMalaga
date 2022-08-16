@@ -19,6 +19,7 @@
     --clr-medium: #5b8291;
     --clr-light: #98DAD9;
     --clr-white: #eaebed;
+    --clr-red:red;
 
 }
 
@@ -108,7 +109,9 @@ p {
 .text-color-white {
     color: var(--clr-white);
 }
-
+.text-color-red{
+    color: var(--clr-red);
+}
 .bold {
     font-weight: 700;
 }
