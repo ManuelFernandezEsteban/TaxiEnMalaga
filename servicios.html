@@ -156,30 +156,34 @@
                         <div class="wrapper-input text-color-dark">
                             <label for="fecha" class="bold ff-title lt-spacing-1">Fecha:</label>
                             <input type="date" name="fecha" id="fecha" required>
+                            <span id="msgErrorDate" class="ff-text text-color-red fs-300"> 
                         </div>
                         <div class="wrapper-input text-color-dark">
                             <label for="hora" class="bold ff-title lt-spacing-1">Hora:</label>
                             <input type="time" name="hora" id="hora" required>
+                            <span id="msgErrorTime" class="ff-text text-color-red fs-300"> 
                         </div>
                         <div class="wrapper-input text-color-dark">
                             <label for="vuelo" class="bold ff-title lt-spacing-1">Vuelo:</label>
-                            <input type="text" name="vuelo" id="vuelo" placeholder="Nº vuelo" required>
+                            <input type="text" name="vuelo" id="vuelo" placeholder="Nº vuelo">
                         </div>
                     </div>
                     <div class="wrapper-input text-color-dark">
                         <label for="pax" class="bold ff-title lt-spacing-1">Pax:</label>
                         <input type="range" min="1" max="8" step="1" name="pax" id="pax" value="1" required>
-                        <span id="paxSpan" class="bold">1 Pax</span>
+                        <span id="paxSpan" class="bold">1 pax</span>
                     </div>
                     <div class="wrapper-input text-color-dark">
                         <label for="observaciones" class="bold ff-title lt-spacing-1">Observaciones:</label>
                         <input type="text" name="observaciones" id="observaciones" placeholder="Que necesita">
                     </div>
-                    <div class="flex text-color-dark">
-                        <label for="privacidad" class="bold ff-title lt-spacing-1">Política de privacidad
-                            <input type="checkbox" name="privacidad" id="privacidad">
-                        </label>
+                    <div class="flex text-color-dark centerHV">
 
+                        <div class="switch">                            
+                            <input type="checkbox" id="chkPrivacidad">
+                            <label for="chkPrivacidad" class="bold text-color-dark ff-title lt-spacing-1">Política de privacidad</label>                            
+                        </div>
+                        <span  class="bold text-color-dark ff-title">Política de privacidad <span id="privaciadSpan"></span> </span>
                     </div>
                     <button id="btnConfirmarReserva" 
                             class="large-button--button text-color-ligth uppercase" >

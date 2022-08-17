@@ -27,28 +27,7 @@ class Error extends Sujeto{
         this.notify(this.data);
     }
 }
-/*
-class ErrorNombre extends Sujeto{
-    constructor(){
-        super();
-        this.data='';
-    }
-    add(item){
-        this.data=item;
-        this.notify(this.data);
-    }
-}
-class ErrorEmail extends Sujeto{
-    constructor(){
-        super();
-        this.data='';
-    }
-    add(item){
-        this.data=item;
-        this.notify(this.data);
-    }
-}
-*/
+
 class SelectDestino extends Sujeto{
     constructor(){
         super();
@@ -70,13 +49,34 @@ class SelectOrigen extends Sujeto{
     }
 }
 
+class PaxRange extends Sujeto{
+    constructor(){
+        super();
+        this.data=1;
+    }
+    add(item){
+        this.data = item;
+        this.notify(this.data);
+    }
+}
+
+class CHKPrivacidad extends Sujeto{
+    constructor(){
+        super();
+        this.data='no aceptada';
+    }
+    add(item){
+        this.data = item;
+        this.notify(this.data);       
+    }
+}
+
 class HtmlElementObserver{
     constructor(element){
         this.element=element;
     }
 
-    refresh(data){
-        
+    refresh(data){        
         this.element.innerHTML=data;
     }
 
@@ -103,6 +103,7 @@ let listaOrigenes=[];
 const url = './assets/data.json';
 const selectO = new SelectOrigen();
 const selectD = new SelectDestino();
+
 crearMatriz(url);
 
 const observerDestino = new Observer((opcion)=>{
@@ -201,17 +202,65 @@ btnReserva.addEventListener('click',()=>{
 
 });
 
+//validacion Formulario
+
+function dosDigitos(digito) {
+    if (digito===0){
+        digito='01';
+    }else if (digito>0&&digito<10){
+        digito=`0${digito}`;
+    }
+    return digito
+}
+
+
+function initDate() {
+    const inputDate = document.querySelector('#fecha');
+    const fechaHoy = new Date();
+    const [month, day, year] = [fechaHoy.getMonth(), fechaHoy.getDate(), fechaHoy.getFullYear()];    
+    const stFechaHoy = `${year}-${dosDigitos(month+1)}-${dosDigitos(day)}`;
+
+    inputDate.setAttribute('min',stFechaHoy)
+}
+initDate();
 const errorNombre = new HtmlElementObserver(msgErrorNombre);
 const errorEmail = new HtmlElementObserver(msgErrorEmail);
-const errorPhone = new HtmlElementObserver(msgErrorPhone)
+const errorPhone = new HtmlElementObserver(msgErrorPhone);
+const errorDate = new HtmlElementObserver(msgErrorDate);
+const errorTime = new HtmlElementObserver(msgErrorTime);
+const spanPax = new HtmlElementObserver(paxSpan);
+const spanPrivacidad = new HtmlElementObserver(privaciadSpan);
 const nameInput = new Error();
 const emailInput = new Error();
 const phoneInput = new Error();
+const dateInput = new Error();
+const timeInput = new Error();
+const inputSpanPax = new PaxRange();
+const inputPrivacidad = new CHKPrivacidad();
 nameInput.subscribe(errorNombre);
 emailInput.subscribe(errorEmail);
 phoneInput.subscribe(errorPhone);
-const inputName = document.querySelector('#name');
-//inputName.addEventListener('input',validarNombre);
+dateInput.subscribe(errorDate);
+timeInput.subscribe(errorTime);
+inputSpanPax.subscribe(spanPax);
+inputPrivacidad.subscribe(spanPrivacidad);
+
+
+const rangePax = document.querySelector('#pax');
+rangePax.value=1;
+rangePax.addEventListener('change',(event)=>{    
+    inputSpanPax.notify(`${event.target.value} pax`);    
+})
+
+const chkPrivacidad = document.querySelector('#chkPrivacidad');
+chkPrivacidad.addEventListener('change',(event)=>{
+    
+    if (event.target.checked){
+        inputPrivacidad.notify('aceptada');
+    }else{
+        inputPrivacidad.notify('no aceptada');
+    }
+})
 
 function validarNombre(){
     const valueInputName= document.querySelector('#name').value;
@@ -237,7 +286,7 @@ function validarEmail(){
 }
 function validarPhone(){
     const valueInputPhone= document.querySelector('#phone').value;
-    if (valueInputPhone.trim()===''){
+    if (valueInputPhone.trim()===''){        
         phoneInput.notify('Indique un teléfono de contacto para la reserva');        
         return false;
     }else{
@@ -245,7 +294,27 @@ function validarPhone(){
     }
     return true;
 }
+function validarFecha(){
+    const valueInputDate = document.querySelector('#fecha').value;    
 
+    if (valueInputDate===''){
+        dateInput.notify('Indique una fecha para la reserva')
+        return false;
+    }
+    dateInput.notify('');
+    return true;
+}
+
+function validarHora(){
+    const valueInputTime = document.querySelector('#hora').value;    
+
+    if (valueInputTime===''){
+        timeInput.notify('Indique una hora para la reserva')
+        return false;
+    }
+    timeInput.notify('');
+    return true;
+}
 function validarFormulario(){
     
     //validamos nombre
@@ -262,13 +331,30 @@ function validarFormulario(){
     if (!esValido){
         return esValido;
     }
-
-    return esValido;
+    esValido=validarFecha();
+    if(!esValido){
+        return esValido
+    }
+    esValido=validarHora();
+    if(!esValido){
+        return esValido
+    }
+    return esValido && chkPrivacidad.checked;    
 }
 
 
 btnConfirmarReserva.addEventListener('click',(event)=>{
     event.preventDefault();
-    const esValido = validarFormulario()
+    const esValido = validarFormulario();
+    console.log(esValido);
+    if (esValido){
+        //enviamos formulario
+        const data = new FormData(formReserva);
+        const values = Object.fromEntries(data.entries());
+        values.destino = 'destino';
+        values.origen = 'origen';
+        console.log(values);
+    }
+
 })
 
