@@ -98,6 +98,8 @@ const selectOrigenes = document.querySelector('#origen');
 //const btnReserva = document.querySelector('#btnReserva');
 let indexOrigen=-1;
 let indexDestino=-1;
+let origenText='';
+let destinoText='';
 let matrizPrecios=[];
 let listaOrigenes=[];
 const url = './assets/data.json';
@@ -123,15 +125,17 @@ selectD.subscribe(observerPrecio);
 
 origen.addEventListener('change',(event)=>{   
     indexOrigen=event.target.value;
+    document.querySelector('#recogidaReserva').value = origen.options[origen.selectedIndex].innerHTML;
     selectO.add(indexOrigen);
 });
 
 
 destino.addEventListener('change',(event)=>{ 
     indexDestino=event.target.value;
+    document.querySelector('#destinoReserva').value = destino.options[destino.selectedIndex].innerHTML; 
     selectD.add(indexDestino);
 });
-
+ 
 
 async function getLista(url){
 
@@ -194,8 +198,8 @@ btnReserva.addEventListener('click',()=>{
     if (indexOrigen<0||indexDestino<0){
         
         return;
-    }else{
-        
+    }else{   
+
         formReserva.classList.remove('sr-only');
         btnReserva.classList.add('sr-only');        
     }
@@ -346,14 +350,15 @@ function validarFormulario(){
 btnConfirmarReserva.addEventListener('click',(event)=>{
     event.preventDefault();
     const esValido = validarFormulario();
-    console.log(esValido);
+    //console.log(esValido);
     if (esValido){
         //enviamos formulario
         const data = new FormData(formReserva);
-        const values = Object.fromEntries(data.entries());
-        values.destino = 'destino';
-        values.origen = 'origen';
-        console.log(values);
+        const values = Object.fromEntries(data.entries());        
+        //console.log(values);
+        formReserva.submit()
+        formReserva.reset();
+        
     }
 
 })
