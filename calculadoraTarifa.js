@@ -1,120 +1,120 @@
-class Sujeto{
-    constructor(){
-        this.observer=[];
+class Sujeto {
+    constructor() {
+        this.observer = [];
     }
-    subscribe(observer){
+    subscribe(observer) {
         this.observer.push(observer);
     }
-    unsubscribe(observer){
-        this.observer=this.observer.filter(o=>o!==observer);
+    unsubscribe(observer) {
+        this.observer = this.observer.filter(o => o !== observer);
     }
 
-    notify(data){
-        this.observer.forEach(e=>{
+    notify(data) {
+        this.observer.forEach(e => {
             e.refresh(data);
         });
     }
 }
 
 
-class Error extends Sujeto{
-    constructor(){
+class Error extends Sujeto {
+    constructor() {
         super();
-        this.data='';
+        this.data = '';
     }
-    add(item){
-        this.data=item;
-        this.notify(this.data);
-    }
-}
-
-class SelectDestino extends Sujeto{
-    constructor(){
-        super();
-        this.data=-1;
-    }
-    add(item){
-        this.data=item;
-        this.notify(this.data);
-    }
-}
-class SelectOrigen extends Sujeto{
-    constructor(){
-        super();
-        this.data=-1;
-    }
-    add(item){
-        this.data=item;
-        this.notify(this.data);
-    }
-}
-
-class PaxRange extends Sujeto{
-    constructor(){
-        super();
-        this.data=1;
-    }
-    add(item){
+    add(item) {
         this.data = item;
         this.notify(this.data);
     }
 }
 
-class CHKPrivacidad extends Sujeto{
-    constructor(){
+class SelectDestino extends Sujeto {
+    constructor() {
         super();
-        this.data='no aceptada';
+        this.data = -1;
     }
-    add(item){
+    add(item) {
         this.data = item;
-        this.notify(this.data);       
+        this.notify(this.data);
+    }
+}
+class SelectOrigen extends Sujeto {
+    constructor() {
+        super();
+        this.data = -1;
+    }
+    add(item) {
+        this.data = item;
+        this.notify(this.data);
     }
 }
 
-class HtmlElementObserver{
-    constructor(element){
-        this.element=element;
+class PaxRange extends Sujeto {
+    constructor() {
+        super();
+        this.data = 1;
+    }
+    add(item) {
+        this.data = item;
+        this.notify(this.data);
+    }
+}
+
+class CHKPrivacidad extends Sujeto {
+    constructor() {
+        super();
+        this.data = 'no aceptada';
+    }
+    add(item) {
+        this.data = item;
+        this.notify(this.data);
+    }
+}
+
+class HtmlElementObserver {
+    constructor(element) {
+        this.element = element;
     }
 
-    refresh(data){        
-        this.element.innerHTML=data;
+    refresh(data) {
+        this.element.innerHTML = data;
     }
 
 }
 
-class Observer{
-    constructor(fn){
-        this.fn=fn;
+class Observer {
+    constructor(fn) {
+        this.fn = fn;
     }
-    refresh(data){
+    refresh(data) {
         this.fn(data);
     }
 }
 
 // select destino y origen
 
-const selectDestinos=document.querySelector('#destino');
+const selectDestinos = document.querySelector('#destino');
 const selectOrigenes = document.querySelector('#origen');
 //const btnReserva = document.querySelector('#btnReserva');
-let indexOrigen=-1;
-let indexDestino=-1;
-let origenText='';
-let destinoText='';
-let matrizPrecios=[];
-let listaOrigenes=[];
+let indexOrigen = -1;
+let indexDestino = -1;
+let origenText = '';
+let destinoText = '';
+let matrizPrecios = [];
+let listaOrigenes = [];
 const url = './assets/data.json';
 const selectO = new SelectOrigen();
 const selectD = new SelectDestino();
 
 crearMatriz(url);
 
-const observerDestino = new Observer((opcion)=>{
-    borrarOptions(selectDestinos); 
-    populateSelect(selectDestinos,listaOrigenes[opcion].destinos);
+const observerDestino = new Observer((opcion) => {
+    borrarOptions(selectDestinos);
+    populateSelect(selectDestinos, listaOrigenes[opcion].destinos);
 });
 
-const observerPrecio = new Observer((opcion)=>{
-   actualizarPrecio(indexOrigen,indexDestino)
+const observerPrecio = new Observer((opcion) => {
+    actualizarPrecio(indexOrigen, indexDestino)
 });
 
 
@@ -123,85 +123,85 @@ selectO.subscribe(observerDestino);
 selectD.subscribe(observerPrecio);
 
 
-origen.addEventListener('change',(event)=>{   
-    indexOrigen=event.target.value;
+origen.addEventListener('change', (event) => {
+    indexOrigen = event.target.value;
     document.querySelector('#recogidaReserva').value = origen.options[origen.selectedIndex].innerHTML;
     selectO.add(indexOrigen);
 });
 
 
-destino.addEventListener('change',(event)=>{ 
-    indexDestino=event.target.value;
-    document.querySelector('#destinoReserva').value = destino.options[destino.selectedIndex].innerHTML; 
+destino.addEventListener('change', (event) => {
+    indexDestino = event.target.value;
+    document.querySelector('#destinoReserva').value = destino.options[destino.selectedIndex].innerHTML;
     selectD.add(indexDestino);
 });
- 
 
-async function getLista(url){
+
+async function getLista(url) {
 
     const response = await fetch(url);
     const lista = await response.json();
     return lista;
 }
 
-async function crearMatriz(url){
+async function crearMatriz(url) {
     listaOrigenes = await getLista(url);
-    let i=0;
+    let i = 0;
     listaOrigenes.forEach(origen => {
-        let j =0;        
-        let listaDestinos=[];
-        origen.destinos.forEach(destino => {            
-            listaDestinos.push(destino.precio);  
-        });        
-        matrizPrecios.push(listaDestinos);        
-    });    
-  
-    populateSelect(selectOrigenes,listaOrigenes);
+        let j = 0;
+        let listaDestinos = [];
+        origen.destinos.forEach(destino => {
+            listaDestinos.push(destino.precio);
+        });
+        matrizPrecios.push(listaDestinos);
+    });
+
+    populateSelect(selectOrigenes, listaOrigenes);
 }
 
-function populateSelect(select,list){
-    list.forEach(item=>{
-        const option = document.createElement('option');        
+function populateSelect(select, list) {
+    list.forEach(item => {
+        const option = document.createElement('option');
         option.classList.add('ff-text');
-        option.value=item.id;
-        option.text=item.lugar;
+        option.value = item.id;
+        option.text = item.lugar;
         select.appendChild(option);
     });
 
 }
-function borrarOptions(select){
-    const listOptions = select.querySelectorAll('option');    
+function borrarOptions(select) {
+    const listOptions = select.querySelectorAll('option');
     listOptions.forEach(option => {
-        if (option.value!=-1){
-            option.remove();            
+        if (option.value != -1) {
+            option.remove();
         }
-    });    
+    });
 }
 
-function actualizarPrecio(origen,destino){
-    
-    if (origen<0||destino<0){
-        precio.textContent='0 €';
+function actualizarPrecio(origen, destino) {
 
-    }else{
-        precio.textContent='';
+    if (origen < 0 || destino < 0) {
+        precio.textContent = '0 €';
+
+    } else {
+        precio.textContent = '';
         const valor = matrizPrecios[origen][destino];
-        precio.textContent=`${valor} €`
-      
+        precio.textContent = `${valor} €`
+
     }
 }
 
 //boton reserva
 
-btnReserva.addEventListener('click',()=>{
-    
-    if (indexOrigen<0||indexDestino<0){
-        
+btnReserva.addEventListener('click', () => {
+
+    if (indexOrigen < 0 || indexDestino < 0) {
+
         return;
-    }else{   
+    } else {
 
         formReserva.classList.remove('sr-only');
-        btnReserva.classList.add('sr-only');        
+        btnReserva.classList.add('sr-only');
     }
 
 });
@@ -209,10 +209,10 @@ btnReserva.addEventListener('click',()=>{
 //validacion Formulario
 
 function dosDigitos(digito) {
-    if (digito===0){
-        digito='01';
-    }else if (digito>0&&digito<10){
-        digito=`0${digito}`;
+    if (digito === 0) {
+        digito = '01';
+    } else if (digito > 0 && digito < 10) {
+        digito = `0${digito}`;
     }
     return digito
 }
@@ -221,10 +221,10 @@ function dosDigitos(digito) {
 function initDate() {
     const inputDate = document.querySelector('#fecha');
     const fechaHoy = new Date();
-    const [month, day, year] = [fechaHoy.getMonth(), fechaHoy.getDate(), fechaHoy.getFullYear()];    
-    const stFechaHoy = `${year}-${dosDigitos(month+1)}-${dosDigitos(day)}`;
+    const [month, day, year] = [fechaHoy.getMonth(), fechaHoy.getDate(), fechaHoy.getFullYear()];
+    const stFechaHoy = `${year}-${dosDigitos(month + 1)}-${dosDigitos(day)}`;
 
-    inputDate.setAttribute('min',stFechaHoy)
+    inputDate.setAttribute('min', stFechaHoy)
 }
 initDate();
 const errorNombre = new HtmlElementObserver(msgErrorNombre);
@@ -251,57 +251,57 @@ inputPrivacidad.subscribe(spanPrivacidad);
 
 
 const rangePax = document.querySelector('#pax');
-rangePax.value=1;
-rangePax.addEventListener('change',(event)=>{    
-    inputSpanPax.notify(`${event.target.value} pax`);    
+rangePax.value = 1;
+rangePax.addEventListener('change', (event) => {
+    inputSpanPax.notify(`${event.target.value} pax`);
 })
 
 const chkPrivacidad = document.querySelector('#chkPrivacidad');
-chkPrivacidad.addEventListener('change',(event)=>{
-    
-    if (event.target.checked){
+chkPrivacidad.addEventListener('change', (event) => {
+
+    if (event.target.checked) {
         inputPrivacidad.notify('aceptada');
-    }else{
+    } else {
         inputPrivacidad.notify('no aceptada');
     }
 })
 
-function validarNombre(){
-    const valueInputName= document.querySelector('#name').value;
-    if (valueInputName.trim()===''){
-        nameInput.notify('Indique a nombre de quien será la reserva');        
+function validarNombre() {
+    const valueInputName = document.querySelector('#name').value;
+    if (valueInputName.trim() === '') {
+        nameInput.notify('Indique a nombre de quien será la reserva');
         return false;
-    }else{
+    } else {
         nameInput.notify('');
     }
     return true;
 }
-function validarEmail(){
-    
-    const inputEmail= document.querySelector('#email');
+function validarEmail() {
+
+    const inputEmail = document.querySelector('#email');
     const valueInputEmail = inputEmail.value;
-    if (valueInputEmail.trim()==='' || !inputEmail.validity.valid ){
-        emailInput.notify('Indique un mail válido');        
+    if (valueInputEmail.trim() === '' || !inputEmail.validity.valid) {
+        emailInput.notify('Indique un mail válido');
         return false;
-    }else{
+    } else {
         emailInput.notify('');
     }
     return true;
 }
-function validarPhone(){
-    const valueInputPhone= document.querySelector('#phone').value;
-    if (valueInputPhone.trim()===''){        
-        phoneInput.notify('Indique un teléfono de contacto para la reserva');        
+function validarPhone() {
+    const valueInputPhone = document.querySelector('#phone').value;
+    if (valueInputPhone.trim() === '') {
+        phoneInput.notify('Indique un teléfono de contacto para la reserva');
         return false;
-    }else{
+    } else {
         phoneInput.notify('');
     }
     return true;
 }
-function validarFecha(){
-    const valueInputDate = document.querySelector('#fecha').value;    
+function validarFecha() {
+    const valueInputDate = document.querySelector('#fecha').value;
 
-    if (valueInputDate===''){
+    if (valueInputDate === '') {
         dateInput.notify('Indique una fecha para la reserva')
         return false;
     }
@@ -309,57 +309,84 @@ function validarFecha(){
     return true;
 }
 
-function validarHora(){
-    const valueInputTime = document.querySelector('#hora').value;    
+function validarHora() {
+    const valueInputTime = document.querySelector('#hora').value;
 
-    if (valueInputTime===''){
+    if (valueInputTime === '') {
         timeInput.notify('Indique una hora para la reserva')
         return false;
     }
     timeInput.notify('');
     return true;
 }
-function validarFormulario(){
-    
+function validarFormulario() {
+
     //validamos nombre
     let esValido = validarNombre();
-    if (!esValido){
+    if (!esValido) {
         return esValido;
-        
+
     }
-    esValido = validarEmail();    
-    if (!esValido){
+    esValido = validarEmail();
+    if (!esValido) {
         return esValido;
     }
     esValido = validarPhone();
-    if (!esValido){
+    if (!esValido) {
         return esValido;
     }
-    esValido=validarFecha();
-    if(!esValido){
+    esValido = validarFecha();
+    if (!esValido) {
         return esValido
     }
-    esValido=validarHora();
-    if(!esValido){
+    esValido = validarHora();
+    if (!esValido) {
         return esValido
     }
-    return esValido && chkPrivacidad.checked;    
+    return esValido && chkPrivacidad.checked;
 }
 
 
-btnConfirmarReserva.addEventListener('click',(event)=>{
+btnConfirmarReserva.addEventListener('click', (event) => {
     event.preventDefault();
     const esValido = validarFormulario();
     //console.log(esValido);
-    if (esValido){
+    if (esValido) {
         //enviamos formulario
         const data = new FormData(formReserva);
-        const values = Object.fromEntries(data.entries());        
-        //console.log(values);
-        formReserva.submit()
-        formReserva.reset();
-        
+        //const values = Object.fromEntries(data.entries());        
+/*
+        envioFormulario(data).then(data => {
+            console.log(data);
+            formReserva.reset();
+            formReserva.classList.remove('sr-only');
+        }).then(data=>data.json()){
+            console.log(error);
+        })
+  */
+        fetch('./php/envioFormulario.php', {
+            method: 'POST',
+            mode: 'no-cors',
+            redirect: 'follow',
+            body: data
+        }).then(datos=>datos.json()).then(datos=>{
+            console.log(datos);
+
+        });
+
+
+
     }
 
 })
+
+async function envioFormulario(form) {
+    const response = await fetch('./php/envioFormulario.php', {
+        method: 'POST',
+        mode: 'no-cors',
+        redirect: 'follow',
+        body: form
+    });
+    return response;
+}
 
