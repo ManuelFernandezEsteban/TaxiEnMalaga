@@ -357,9 +357,7 @@ btnConfirmarReserva.addEventListener('click', (event) => {
         //const values = Object.fromEntries(data.entries());        
 /*
         envioFormulario(data).then(data => {
-            console.log(data);
-            formReserva.reset();
-            formReserva.classList.remove('sr-only');
+            
         }).then(data=>data.json()){
             console.log(error);
         })
@@ -367,11 +365,13 @@ btnConfirmarReserva.addEventListener('click', (event) => {
         fetch('./php/envioFormulario.php', {
             method: 'POST',
             mode: 'no-cors',
-            redirect: 'follow',
+           
             body: data
         }).then(datos=>datos.json()).then(datos=>{
-            console.log(datos);
-
+           
+            formReserva.reset();
+            formReserva.classList.remove('sr-only');
+            //TO-DO pop-up con mensaje de exito o error
         });
 
 

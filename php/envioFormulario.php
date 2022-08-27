@@ -25,7 +25,7 @@ $oMail->setFrom("pruebasenviomail02@gmail.com","Taxi En Malaga");
 $oMail->addAddress($_POST['email'],"TaxiEnMalaga");
 $oMail->Subject="Reserva";
 $oMail->msgHTML($_POST['fecha']);
- 
+//TO-DO enviar correo con todos los datos en formato HTML y texto  
 if(!$oMail->send())
   echo json_encode($oMail->ErrorInfo);
 else
